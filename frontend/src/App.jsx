@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API = "http://localhost:3000/api/employees";
+const API = "https://employee-management-system-5t6t.onrender.com/api/employees";
 
 const emptyForm = {
   employee_code: "",
