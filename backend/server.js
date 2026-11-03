@@ -372,24 +372,17 @@ app.delete('/api/employees/:id', async (req, res) => {
     }
 });
 
-// Start server
-async function startServer() {
-    try {
-        await db.query('SELECT 1');
+// Start server first, independently of MySQL
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
 
-        console.log('MySQL connected successfully!');
-
-        app.listen(PORT, () => {
-            console.log(
-                `Server running at http://localhost:${PORT}`
-            );
+    // Test database connection separately
+    db.query('SELECT 1')
+        .then(() => {
+            console.log('MySQL connected successfully!');
+        })
+        .catch((error) => {
+            console.error('MySQL connection failed:', error.message);
         });
-    } catch (error) {
-        console.error(
-            'Unable to connect to MySQL:',
-            error.message
-        );
-    }
-}
+});
 
-startServer();
